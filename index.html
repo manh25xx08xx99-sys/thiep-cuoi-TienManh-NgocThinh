@@ -23,7 +23,7 @@
 }
 *{box-sizing:border-box}
 html,body{background:var(--son-dam);color:var(--vang-nhat)}
-body{font-family:var(--f-than);font-weight:300;line-height:1.65;
+body{font-family:var(--f-than);font-weight:300;line-height:1.65;font-variant-numeric:lining-nums;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   background-image:radial-gradient(circle at 50% 0,#7a1017 0,var(--son-dam) 60%);min-height:100%}
 h1,h2,h3{text-wrap:balance;margin:0}
@@ -38,6 +38,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .nhan{font-family:var(--f-tieude);text-transform:uppercase;letter-spacing:.28em;font-size:13px;color:var(--vang);font-weight:600}
 .ten{font-family:var(--f-ten);color:var(--vang);font-size:clamp(46px,13vw,68px);line-height:1.05;font-weight:700}
 .ten > span[data-k],.ten > .va{display:block}
+.ten > span[data-k],.lo-ten > span[data-k]{padding:.12em .22em .26em;margin:-.12em -.22em -.26em}
 .ten .va{font-family:var(--f-tieude);font-style:italic;font-size:28px;color:var(--vang-nhat);margin:4px 0}
 .hoa-van{width:180px;height:18px;color:var(--vang)}
 .ngay-lon{font-family:var(--f-tieude);font-size:22px;font-weight:600;letter-spacing:.06em;color:var(--vang-nhat)}
@@ -46,7 +47,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .loi{max-width:40ch;font-size:15px;margin:0}
 .dem{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:380px}
 .o{border:1px solid rgba(226,184,92,.6);padding:10px 4px}
-.o span{display:block;font-family:var(--f-tieude);font-size:32px;font-weight:700;color:var(--vang);font-variant-numeric:tabular-nums;line-height:1.1}
+.o span{display:block;font-family:var(--f-tieude);font-size:32px;font-weight:700;color:var(--vang);font-variant-numeric:lining-nums tabular-nums;line-height:1.1}
 .o small{font-size:11px;letter-spacing:.15em;text-transform:uppercase}
 .su-kien{width:100%;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;text-align:left;
   background:rgba(0,0,0,.14);border:1px solid rgba(226,184,92,.5);padding:20px}
@@ -78,7 +79,7 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .the-qua{background:var(--giay);color:var(--muc);padding:18px 14px;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;box-shadow:0 8px 20px rgba(0,0,0,.3)}
 .the-qua h3{font-family:var(--f-tieude);font-size:22px;color:var(--son)}
 .the-qua .nh{font-size:13px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
-.the-qua .stk{font-family:var(--f-tieude);font-size:24px;font-weight:700;letter-spacing:.06em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.the-qua .stk{font-family:var(--f-tieude);font-size:24px;font-weight:700;letter-spacing:.06em;font-variant-numeric:lining-nums tabular-nums;overflow-wrap:anywhere}
 .the-qua .ctk{font-size:13px}
 .qr{width:150px;max-width:100%;aspect-ratio:1;border:1px dashed rgba(74,26,18,.45);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;padding:6px}
 .qr img{width:100%;height:100%;object-fit:contain;display:block}
@@ -306,7 +307,7 @@ body.dang-sua .ten span[data-k]{animation:none;background:none;color:var(--vang)
 .bia.mo{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s ease,visibility 0s .6s}
 /* ===== Hiệu ứng chữ ===== */
 /* Tên viết dần ra như nét bút */
-@keyframes vietRa{from{clip-path:inset(-20% 100% -20% 0)}to{clip-path:inset(-20% -5% -20% 0)}}
+@keyframes vietRa{from{clip-path:inset(-40% 100% -40% -20%)}to{clip-path:inset(-40% -20% -40% -20%)}}
 .bia .ten span[data-k]{animation:vietRa .8s .2s cubic-bezier(.6,0,.3,1) both,lapLanh 4.5s linear infinite}
 .bia .ten span[data-k="tenRe"]{animation-delay:.6s,0s}
 .da-mo .thiep .ten span[data-k]{animation:vietRa .8s .15s cubic-bezier(.6,0,.3,1) both,lapLanh 4.5s linear infinite}
@@ -457,7 +458,7 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
     <h2 class="ten"><span data-k="tenDau">Ngọc Thịnh</span><span class="va">&amp;</span><span data-k="tenRe">Tiến Mạnh</span></h2>
     <svg class="hoa-van" viewBox="0 0 180 18" aria-hidden="true"><path d="M0 9h70M110 9h70" stroke="currentColor" stroke-width="1"></path><path d="M90 2l7 7-7 7-7-7z" fill="currentColor"></path><circle cx="76" cy="9" r="2" fill="currentColor"></circle><circle cx="104" cy="9" r="2" fill="currentColor"></circle></svg>
     <div class="ngay-lon">Tháng 11 <b>28</b> 2026</div>
-    <div class="am">Nhằm ngày 20 tháng 10 năm Bính Ngọ</div>
+    <div class="am">Tức ngày 20 tháng 10 năm Bính Ngọ</div>
     <p class="loi" data-k="loiMoi">Thay cho những tấm thiệp hồng không thể trao tận tay, thân mời bạn tới chung vui cùng chúng mình trong ngày vu quy.</p>
   </section>
 
@@ -478,7 +479,7 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
       <div>
         <h3>Tiệc thân mật</h3>
         <p>Ngày 27 tháng 11 năm 2026</p>
-        <p class="am">Nhằm ngày 19 tháng 10 năm Bính Ngọ</p>
+        <p class="am">Tức ngày 19 tháng 10 năm Bính Ngọ</p>
         <p>Tại tư gia nhà gái</p>
       </div>
     </div>
@@ -509,7 +510,7 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
       <div>
         <h3>Lễ Vu Quy</h3>
         <p>Ngày 28 tháng 11 năm 2026</p>
-        <p class="am">Nhằm ngày 20 tháng 10 năm Bính Ngọ</p>
+        <p class="am">Tức ngày 20 tháng 10 năm Bính Ngọ</p>
         <p>Tại tư gia nhà gái</p>
       </div>
     </div>
