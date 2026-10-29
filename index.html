@@ -603,6 +603,11 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
       <p id="xnLoiBao" class="am" role="alert" hidden="">Bạn nhập họ tên giúp chúng mình nhé.</p>
       <button class="nut" type="submit">Gửi xác nhận</button>
     </form>
+    <div class="ket-qua" id="ketQuaOk" hidden="">
+      <strong>Cảm ơn bạn nhiều!</strong>
+      <span style="font-size:14px">Chúng mình đã nhận được xác nhận của bạn rồi nhé.</span>
+      <div class="nut-dong"><button class="nut-nho" type="button" id="nutGuiLai">Gửi thêm xác nhận khác</button></div>
+    </div>
     <div class="ket-qua" id="ketQua" hidden="">
       <strong>Cảm ơn bạn nhiều!</strong>
       <span style="font-size:14px">Tin nhắn xác nhận đã được soạn sẵn. Bạn bấm <b>Sao chép</b> rồi gửi qua Zalo hoặc tin nhắn tới số:</span>
@@ -707,21 +712,33 @@ function saoChep(txt,nut,el){
 document.querySelectorAll("[data-sao]").forEach(function(b){
   b.addEventListener("click",function(){ var el=document.querySelector('[data-k="'+b.dataset.sao+'"]'); saoChep(el.textContent.replace(/\s/g,""),b,el); });
 });
-/* Xác nhận tham dự: soạn tin nhắn để khách gửi qua Zalo */
+/* Xác nhận tham dự: gửi vào Google Sheet (chia trang "Nhà trai" / "Nhà gái").
+   Chưa có link Sheet, hoặc gửi lỗi, thì soạn sẵn tin nhắn để khách gửi qua Zalo như cũ. */
+var LINK_SHEET = "https://script.google.com/macros/s/AKfycbxElsFKfiyZZ7xnRHhr7G27ktz3QV6YLxU4EoXor0GflpPocBeeq7DnTv0FDukEeo5A/exec";
 (function(){
-  var f=document.getElementById("formXN"), kq=document.getElementById("ketQua"), tin=document.getElementById("tinNhan");
+  var f=document.getElementById("formXN"), kq=document.getElementById("ketQua"), ok=document.getElementById("ketQuaOk"),
+      tin=document.getElementById("tinNhan"), nutGui=f.querySelector('button[type="submit"]');
+  function soanZalo(d){
+    var t="Xác nhận dự đám cưới Ngọc Thịnh & Tiến Mạnh\n- Họ tên: "+d.ten+"\n- "+d.di;
+    if(d.di==="Sẽ tham dự") t+="\n- Số người: "+d.so+"\n- Buổi: "+d.buoi;
+    t+="\n- Khách của: "+d.ben;
+    if(d.loi) t+="\n- Lời chúc: "+d.loi;
+    tin.textContent=t; f.hidden=true; kq.hidden=false;
+  }
   f.addEventListener("submit",function(e){
     e.preventDefault();
     var ten=f.ten.value.trim();
     document.getElementById("xnLoiBao").hidden=!!ten;
     if(!ten){ f.ten.focus(); return; }
-    var di=f.querySelector('input[name="di"]:checked').value;
-    var t="Xác nhận dự đám cưới Ngọc Thịnh & Tiến Mạnh\n- Họ tên: "+ten+"\n- "+di;
-    if(di==="Sẽ tham dự") t+="\n- Số người: "+f.so.value+"\n- Buổi: "+f.buoi.value;
-    t+="\n- Khách của: "+f.ben.value;
-    if(f.loi.value.trim()) t+="\n- Lời chúc: "+f.loi.value.trim();
-    tin.textContent=t; f.hidden=true; kq.hidden=false;
+    var d={ten:ten.slice(0,100), di:f.querySelector('input[name="di"]:checked').value, so:f.so.value, ben:f.ben.value, buoi:f.buoi.value, loi:f.loi.value.trim().slice(0,500), thiep:"Thiệp nhà gái"};
+    if(!LINK_SHEET){ soanZalo(d); return; }
+    nutGui.disabled=true; var cu=nutGui.textContent; nutGui.textContent="Đang gửi…";
+    fetch(LINK_SHEET,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(d)})
+      .then(function(){ f.reset(); f.hidden=true; ok.hidden=false; })
+      .catch(function(){ soanZalo(d); })
+      .then(function(){ nutGui.disabled=false; nutGui.textContent=cu; });
   });
+  document.getElementById("nutGuiLai").addEventListener("click",function(){ ok.hidden=true; f.hidden=false; f.ten.focus(); });
   document.getElementById("nutSaoTin").addEventListener("click",function(){ saoChep(tin.textContent,this,tin); });
   document.getElementById("nutSuaXN").addEventListener("click",function(){ kq.hidden=true; f.hidden=false; });
 })();
