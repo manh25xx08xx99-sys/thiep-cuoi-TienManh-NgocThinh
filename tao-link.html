@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#2e0508">
+<title>Tạo Link Mời Cưới</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap&subset=vietnamese">
+<style>
+/* Layout: một cột công cụ trên nền đỏ trầm – chọn thiệp, dán tên, nhận danh sách link */
+:root{
+  --nen:#2e0508; --the:#5c0c11; --the2:#4a080c; --vang:#e2b85c; --vang-nhat:#f6e2b0; --chu:#f3e6d8; --mo:#c9b39a; --vien:rgba(226,184,92,.35);
+  --f-tieude:"Cormorant Garamond","Times New Roman",serif;
+  --f-than:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--nen);color:var(--chu);font-family:var(--f-than);font-size:15px;line-height:1.55;font-variant-numeric:lining-nums;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
+.khung{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1{font-family:var(--f-tieude);font-size:clamp(28px,7vw,38px);color:var(--vang);margin:0;line-height:1.15;text-wrap:balance}
+h1 span{font-family:"Noto Serif SC","Songti SC",serif;margin-right:8px}
+.phu{margin:0;color:var(--mo);max-width:60ch}
+.the{background:var(--the);border:1px solid var(--vien);padding:18px;display:flex;flex-direction:column;gap:12px}
+.nhan{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--vang);font-weight:600}
+.chon{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--vang)}
+.chon button{font:inherit;font-weight:500;min-height:46px;border:0;background:transparent;color:var(--vang-nhat);cursor:pointer}
+.chon button[aria-pressed="true"]{background:var(--vang);color:var(--the)}
+textarea{font:inherit;color:#3a1a12;background:#fbf3e2;border:1px solid var(--vang);padding:10px 12px;width:100%;min-height:150px;resize:vertical;font-size:16px}
+textarea#mau{min-height:92px}
+input#maCN{font:inherit;font-size:16px;color:#3a1a12;background:#fbf3e2;border:1px solid var(--vang);padding:10px 12px;width:100%;max-width:340px}
+input#maCN:focus-visible{outline:2px solid var(--vang-nhat);outline-offset:2px}
+.ket-qua-sheet{margin:0;padding:10px 12px;border:1px solid var(--vien);background:var(--the2);font-size:14px}
+.ket-qua-sheet.ok{border-color:#7fbf7f;color:#d9f2d9}
+.ket-qua-sheet.loi{border-color:#e08a8a;color:#ffd9d9}
+.goi-y{font-size:13px;color:var(--mo);margin:0}
+code{background:rgba(0,0,0,.25);padding:1px 5px;color:var(--vang-nhat)}
+.hang-nut{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nut{font:inherit;font-weight:600;font-size:14px;min-height:42px;padding:8px 16px;border:1px solid var(--vang);background:var(--vang);color:var(--the);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.nut.phu-nut{background:transparent;color:var(--vang-nhat)}
+.nut:focus-visible,.chon button:focus-visible,textarea:focus-visible{outline:2px solid var(--vang-nhat);outline-offset:2px}
+.dem{font-size:13px;color:var(--mo)}
+.ds{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.dong{background:var(--the2);border:1px solid var(--vien);padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}
+.dong .ten{font-family:var(--f-tieude);font-size:22px;font-weight:700;color:var(--vang);min-width:0;overflow-wrap:anywhere}
+.dong .link{grid-column:1/-1;font-size:12.5px;color:var(--mo);overflow-wrap:anywhere;user-select:all;min-width:0}
+.dong .hang-nut{grid-column:1/-1}
+.dong .nut{min-height:38px;font-size:13px;padding:6px 12px}
+.trong{color:var(--mo);text-align:center;padding:20px;border:1px dashed var(--vien)}
+.vi-du{font-size:12px;color:var(--vang);border:1px solid var(--vien);padding:1px 6px;margin-left:6px;vertical-align:middle}
+.thong-bao{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--vang);color:var(--the);font-weight:600;
+  padding:10px 18px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.4);max-width:calc(100% - 32px)}
+@media (max-width:480px){.dong .ten{font-size:20px}}
+</style>
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="khung">
+  <header>
+    <h1><span aria-hidden="true">囍</span>Tạo link mời cưới</h1>
+    <p class="phu">Dán danh sách khách, mỗi người một dòng. Mỗi người nhận một link riêng, bìa thiệp hiện đúng tên của họ.</p>
+  </header>
+
+  <section class="the">
+    <div class="nhan">1 · Chọn thiệp</div>
+    <div class="chon" role="group" aria-label="Chọn thiệp">
+      <button type="button" id="chonGai" aria-pressed="true">Thiệp nhà gái</button>
+      <button type="button" id="chonTrai" aria-pressed="false">Thiệp nhà trai</button>
+    </div>
+  </section>
+
+  <section class="the">
+    <label class="nhan" for="dsTen">2 · Tên khách (mỗi dòng một người)</label>
+    <textarea id="dsTen" spellcheck="false" placeholder="Ví dụ:&#10;Dung xinh gái&#10;Anh Hùng và chị Lan&#10;Cô Ba"></textarea>
+    <p class="goi-y">Ghi đúng cách bạn muốn hiện trên bìa, ví dụ <code>Anh Hùng và chị Lan</code>, <code>Gia đình chú Tư</code>.</p>
+  </section>
+
+  <section class="the">
+    <label class="nhan" for="mau">3 · Tin nhắn kèm link</label>
+    <textarea id="mau" spellcheck="false"></textarea>
+    <p class="goi-y"><code>{ten}</code> được thay bằng tên khách, <code>{link}</code> bằng link thiệp.</p>
+    <div class="hang-nut"><button class="nut phu-nut" type="button" id="mauGoc">Dùng lại tin nhắn mẫu</button></div>
+  </section>
+
+  <section class="the" aria-live="polite">
+    <div class="hang-nut" style="justify-content:space-between">
+      <div class="nhan">4 · Link cho từng người</div>
+      <span class="dem" id="dem"></span>
+    </div>
+    <div class="hang-nut">
+      <button class="nut" type="button" id="saoTatCa">Sao chép tất cả link</button>
+      <button class="nut phu-nut" type="button" id="saoTatCaTin">Sao chép tất cả tin nhắn</button>
+    </div>
+    <ul class="ds" id="ds"></ul>
+  </section>
+
+  <section class="the">
+    <div class="nhan">5 · Lưu danh sách lên Google Sheet</div>
+    <p class="goi-y" style="color:var(--chu)">Ghi danh sách khách của thiệp đang chọn vào trang <b>“Danh sách mời”</b> trong bảng tính xác nhận tham dự. Mỗi lần cập nhật sẽ thay danh sách cũ của thiệp đó, thiệp còn lại giữ nguyên.</p>
+    <label class="goi-y" for="maCN" style="color:var(--vang);font-weight:600">Mã cập nhật (đặt trong Apps Script)</label>
+    <input id="maCN" type="password" autocomplete="off" spellcheck="false" placeholder="Nhập mã cập nhật của bạn">
+    <div class="hang-nut">
+      <button class="nut" type="button" id="guiSheet">Cập nhật danh sách lên Google Sheet</button>
+      <button class="nut phu-nut" type="button" id="saoBang">Sao chép bảng để dán vào Sheet</button>
+    </div>
+    <p class="ket-qua-sheet" id="kqSheet" role="status" hidden></p>
+  </section>
+</div>
+<div class="thong-bao" id="thongBao" role="status" hidden></div>
+
+<script>
+var GOC = "https://manh25xx08xx99-sys.github.io/thiep-cuoi-TienManh-NgocThinh/";
+var LINK_SHEET = "https://script.google.com/macros/s/AKfycbxElsFKfiyZZ7xnRHhr7G27ktz3QV6YLxU4EoXor0GflpPocBeeq7DnTv0FDukEeo5A/exec";
+var THIEP = {
+  gai:  { file:"nha-gai.html",  doi:"Ngọc Thịnh & Tiến Mạnh", le:"lễ vu quy", ten:"Thiệp nhà gái" },
+  trai: { file:"nha-trai.html", doi:"Tiến Mạnh & Ngọc Thịnh", le:"lễ thành hôn", ten:"Thiệp nhà trai" }
+};
+var VI_DU = "Dung xinh gái\nAnh Hùng và chị Lan";
+function mauGoc(k){ return "Thân mời {ten} tới chung vui trong ngày cưới của " + THIEP[k].doi + " 💌\nThiệp mời của bạn đây: {link}"; }
+
+var ben = "gai", dsTen = document.getElementById("dsTen"), mau = document.getElementById("mau"), ds = document.getElementById("ds");
+function doc(k){ try{ return localStorage.getItem("taoLink."+k); }catch(e){ return null; } }
+function ghi(k,v){ try{ localStorage.setItem("taoLink."+k,v); }catch(e){} }
+
+var luuBen = doc("ben"); if (luuBen === "trai") ben = "trai";
+var luuTen = doc("ten"); var laViDu = luuTen === null;
+dsTen.value = laViDu ? VI_DU : luuTen;
+mau.value = doc("mau." + ben) || mauGoc(ben);
+
+function taoLink(ten){ return GOC + THIEP[ben].file + "?ten=" + encodeURIComponent(ten); }
+function taoTin(ten){ return mau.value.split("{ten}").join(ten).split("{link}").join(taoLink(ten)); }
+function danhSach(){ var seen = {}; return dsTen.value.split("\n").map(function(t){ return t.replace(/\s+/g," ").trim().slice(0,60); }).filter(function(t){ if(!t || seen[t]) return false; seen[t]=1; return true; }); }
+
+var hen;
+function bao(t){ var b=document.getElementById("thongBao"); b.textContent=t; b.hidden=false; clearTimeout(hen); hen=setTimeout(function(){ b.hidden=true; },1800); }
+function sao(text, nhan){
+  try{
+    navigator.clipboard.writeText(text).then(function(){ bao(nhan); }, function(){ dungThu(text); });
+  }catch(e){ dungThu(text); }
+}
+function dungThu(text){
+  var ta=document.createElement("textarea"); ta.value=text; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select();
+  var ok=false; try{ ok=document.execCommand("copy"); }catch(e){}
+  document.body.removeChild(ta); bao(ok ? "Đã sao chép" : "Không sao chép được, hãy chọn và sao chép thủ công");
+}
+
+function ve(){
+  document.getElementById("chonGai").setAttribute("aria-pressed", ben==="gai");
+  document.getElementById("chonTrai").setAttribute("aria-pressed", ben==="trai");
+  var ten = danhSach();
+  document.getElementById("dem").textContent = ten.length + " khách";
+  ds.innerHTML = "";
+  if (!ten.length){ var li=document.createElement("li"); li.className="trong"; li.textContent="Nhập tên khách ở bước 2 để tạo link."; ds.appendChild(li); return; }
+  ten.forEach(function(t){
+    var li=document.createElement("li"); li.className="dong";
+    var a=document.createElement("div"); a.className="ten"; a.textContent=t;
+    if (laViDu){ var v=document.createElement("span"); v.className="vi-du"; v.textContent="ví dụ"; a.appendChild(v); }
+    var link=document.createElement("div"); link.className="link"; link.textContent=taoLink(t);
+    var hn=document.createElement("div"); hn.className="hang-nut";
+    var b1=document.createElement("button"); b1.type="button"; b1.className="nut"; b1.textContent="Sao chép tin nhắn"; b1.onclick=function(){ sao(taoTin(t),"Đã sao chép tin nhắn cho "+t); };
+    var b2=document.createElement("button"); b2.type="button"; b2.className="nut phu-nut"; b2.textContent="Sao chép link"; b2.onclick=function(){ sao(taoLink(t),"Đã sao chép link cho "+t); };
+    var b3=document.createElement("a"); b3.className="nut phu-nut"; b3.textContent="Mở thử"; b3.href=taoLink(t); b3.target="_blank"; b3.rel="noopener";
+    hn.append(b1,b2,b3); li.append(a,link,hn); ds.appendChild(li);
+  });
+}
+
+function chonBen(k){
+  if (ben===k) return;
+  if (mau.value === mauGoc(ben) || !doc("mau."+k)) mau.value = doc("mau."+k) || mauGoc(k);
+  ben=k; ghi("ben",k); ve();
+}
+document.getElementById("chonGai").onclick=function(){ chonBen("gai"); };
+document.getElementById("chonTrai").onclick=function(){ chonBen("trai"); };
+dsTen.addEventListener("input",function(){ laViDu=false; ghi("ten",dsTen.value); ve(); });
+dsTen.addEventListener("focus",function(){ if(laViDu){ dsTen.select(); } });
+mau.addEventListener("input",function(){ ghi("mau."+ben,mau.value); });
+document.getElementById("mauGoc").onclick=function(){ mau.value=mauGoc(ben); ghi("mau."+ben,mau.value); bao("Đã dùng lại tin nhắn mẫu"); };
+document.getElementById("saoTatCa").onclick=function(){ var t=danhSach(); if(!t.length) return; sao(t.map(function(n){ return n+": "+taoLink(n); }).join("\n"),"Đã sao chép "+t.length+" link"); };
+document.getElementById("saoTatCaTin").onclick=function(){ var t=danhSach(); if(!t.length) return; sao(t.map(taoTin).join("\n\n———\n\n"),"Đã sao chép "+t.length+" tin nhắn"); };
+/* Lưu danh sách lên Google Sheet */
+var maCN=document.getElementById("maCN"), kq=document.getElementById("kqSheet"), nutGui=document.getElementById("guiSheet");
+maCN.value = doc("ma") || "";
+maCN.addEventListener("input",function(){ ghi("ma",maCN.value.trim()); });
+function bao2(t,loai){ kq.textContent=t; kq.className="ket-qua-sheet "+(loai||""); kq.hidden=false; }
+var LOI = {
+  sai_ma:"Mã cập nhật chưa đúng. Hãy nhập đúng mã bạn đã đặt ở dòng MA_CAP_NHAT trong Apps Script.",
+  chua_dat_ma:"Bạn chưa đặt mã trong Apps Script. Hãy đổi dòng MA_CAP_NHAT = 'doi-ma-nay' thành mã của bạn rồi triển khai phiên bản mới.",
+  sai_thiep:"Không nhận ra thiệp. Hãy chọn lại Thiệp nhà gái hoặc Thiệp nhà trai.",
+  sai_du_lieu:"Danh sách gửi đi bị lỗi. Hãy thử lại."
+};
+function khongKetNoi(){
+  bao2("Không kết nối được Google Sheet. Nút này chỉ chạy khi mở trang Tạo link từ link GitHub (…/tao-link.html). Tạm thời bạn có thể bấm “Sao chép bảng để dán vào Sheet”.","loi");
+}
+nutGui.onclick=function(){
+  var ten=danhSach(), khoa=maCN.value.trim();
+  if(!ten.length){ bao2("Danh sách đang trống. Hãy nhập tên khách ở bước 2.","loi"); return; }
+  if(laViDu){ bao2("Danh sách đang là tên ví dụ. Hãy nhập danh sách khách thật trước khi cập nhật.","loi"); return; }
+  if(!khoa){ bao2("Hãy nhập mã cập nhật trước.","loi"); maCN.focus(); return; }
+  var t=THIEP[ben].ten, cb="kqSheet"+Date.now();
+  var url=LINK_SHEET+"?loai=danhSach&cb="+cb+"&thiep="+encodeURIComponent(t)+"&khoa="+encodeURIComponent(khoa)+"&ds="+encodeURIComponent(JSON.stringify(ten));
+  nutGui.disabled=true; bao2("Đang cập nhật "+ten.length+" khách lên Google Sheet…");
+  function xong(){ nutGui.disabled=false; }
+  if(url.length>7000){ // danh sách rất dài: gửi kiểu khác, không đọc được kết quả
+    fetch(LINK_SHEET,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({loai:"danhSach",khoa:khoa,thiep:t,ds:ten})})
+      .then(function(){ bao2("Đã gửi "+ten.length+" khách của "+t+". Danh sách dài nên trang không kiểm tra được kết quả. Hãy mở Google Sheet xem trang “Danh sách mời”.","ok"); })
+      .catch(khongKetNoi).then(xong); return;
+  }
+  var s=document.createElement("script"), hen=setTimeout(function(){ don(); khongKetNoi(); xong(); },20000);
+  function don(){ clearTimeout(hen); delete window[cb]; s.remove(); }
+  window[cb]=function(r){ don(); xong();
+    if(r && r.ok) bao2("Đã cập nhật "+r.so+" khách của "+t+" lên Google Sheet (trang “Danh sách mời” hiện có "+r.tong+" khách).","ok");
+    else bao2(LOI[r && r.loi] || "Cập nhật chưa thành công. Hãy thử lại.","loi");
+  };
+  s.onerror=function(){ don(); khongKetNoi(); xong(); };
+  s.src=url; document.body.appendChild(s);
+};
+document.getElementById("saoBang").onclick=function(){
+  var ten=danhSach(); if(!ten.length) return;
+  var t=THIEP[ben].ten;
+  sao(ten.map(function(n){ return n+"\t"+t+"\t"+taoLink(n); }).join("\n"),"Đã sao chép bảng "+ten.length+" khách. Dán vào ô A2 trang “Danh sách mời”.");
+};
+ve();
+</script>
+</body>
+</html>
