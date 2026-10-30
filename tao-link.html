@@ -110,7 +110,7 @@ code{background:rgba(0,0,0,.25);padding:1px 5px;color:var(--vang-nhat)}
 
   <section class="the">
     <div class="nhan">3 · Lưu danh sách lên Google Sheet</div>
-    <p class="goi-y" style="color:var(--chu)">Ghi danh sách khách của thiệp đang chọn vào trang <b>“Danh sách mời”</b> trong bảng tính xác nhận tham dự. Chỉ <b>thêm khách mới</b>; khách đã có trên Sheet giữ nguyên. Muốn xoá ai, bạn xoá trực tiếp trong Google Sheet.</p>
+    <p class="goi-y" style="color:var(--chu)">Ghi danh sách khách vào bảng tính xác nhận tham dự: thiệp nhà gái vào trang <b>“Khách mời nhà gái”</b>, thiệp nhà trai vào trang <b>“Khách mời nhà trai”</b>. Chỉ <b>thêm khách mới</b>; khách đã có trên Sheet giữ nguyên. Muốn xoá ai, bạn xoá trực tiếp trong Google Sheet.</p>
     <label class="goi-y" for="maCN" style="color:var(--vang);font-weight:600">Mã cập nhật (đặt trong Apps Script)</label>
     <input id="maCN" type="password" autocomplete="off" spellcheck="false" placeholder="Nhập mã cập nhật của bạn">
     <div class="hang-nut">
@@ -226,13 +226,13 @@ nutGui.onclick=function(){
   function xong(){ nutGui.disabled=false; }
   if(url.length>7000){ // danh sách rất dài: gửi kiểu khác, không đọc được kết quả
     fetch(LINK_SHEET,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({loai:"danhSach",khoa:khoa,thiep:t,ds:ten})})
-      .then(function(){ bao2("Đã gửi "+ten.length+" khách của "+t+". Khách mới sẽ được thêm, khách đã có giữ nguyên. Danh sách dài nên trang không kiểm tra được kết quả, hãy mở Google Sheet xem trang “Danh sách mời”.","ok"); })
+      .then(function(){ bao2("Đã gửi "+ten.length+" khách của "+t+". Khách mới sẽ được thêm, khách đã có giữ nguyên. Danh sách dài nên trang không kiểm tra được kết quả, hãy mở Google Sheet xem trang “Khách mời "+(ben==="gai"?"nhà gái":"nhà trai")+"”.","ok"); })
       .catch(khongKetNoi).then(xong); return;
   }
   var s=document.createElement("script"), hen=setTimeout(function(){ don(); khongKetNoi(); xong(); },20000);
   function don(){ clearTimeout(hen); delete window[cb]; s.remove(); }
   window[cb]=function(r){ don(); xong();
-    if(r && r.ok) bao2((r.so ? "Đã thêm "+r.so+" khách mới của "+t+" lên Google Sheet." : "Không có khách mới, tất cả đã có trên Google Sheet.")+(r.trung ? " Bỏ qua "+r.trung+" khách đã có." : "")+" Trang “Danh sách mời” hiện có "+r.tong+" khách.","ok");
+    if(r && r.ok) bao2((r.so ? "Đã thêm "+r.so+" khách mới của "+t+" lên Google Sheet." : "Không có khách mới, tất cả đã có trên Google Sheet.")+(r.trung ? " Bỏ qua "+r.trung+" khách đã có." : "")+" Trang “"+(r.trang||"Khách mời")+"” hiện có "+r.tong+" khách.","ok");
     else bao2(LOI[r && r.loi] || "Cập nhật chưa thành công. Hãy thử lại.","loi");
   };
   s.onerror=function(){ don(); khongKetNoi(); xong(); };
