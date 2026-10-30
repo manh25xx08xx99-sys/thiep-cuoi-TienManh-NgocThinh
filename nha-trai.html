@@ -305,6 +305,10 @@ body.dang-sua .ten span[data-k]{animation:none;background:none;color:var(--vang)
 .bia.dang-mo .bia-trong{opacity:0;transform:scale(.92);pointer-events:none}
 .bia.dang-mo{cursor:pointer}
 .bia.mo{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s ease,visibility 0s .6s}
+/* Tên khách trên bìa */
+.ten-khach{font-weight:500;display:inline-block;max-width:100%;overflow-wrap:anywhere}
+.co-ten .ten-khach{font-family:var(--f-ten);font-weight:700;font-size:clamp(26px,7.5vw,34px);line-height:1.2;color:var(--vang);
+  padding:.1em .7em .2em;border-top:1px solid rgba(226,184,92,.55);border-bottom:1px solid rgba(226,184,92,.55);margin-top:6px}
 /* ===== Tự cuộn ===== */
 .tu-cuon{position:fixed;z-index:40;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));
   width:44px;height:44px;border-radius:50%;border:1px solid var(--vang);background:var(--son);color:var(--vang);cursor:pointer;
@@ -452,7 +456,7 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
     <div class="nhan">Lễ Thành Hôn</div>
     <h1 class="ten"><span data-k="tenRe">Tiến Mạnh</span><span class="va">&amp;</span><span data-k="tenDau">Ngọc Thịnh</span></h1>
     <div class="ngay-lon" style="font-size:18px">Thứ Bảy · 28.11.2026</div>
-    <p class="loi">Thân mời<br><strong style="font-weight:500">Bạn &amp; người thương</strong></p>
+    <p class="loi moi-khach">Thân mời<br><strong class="ten-khach">Bạn &amp; người thương</strong></p>
     <button class="nut" id="moThiep" type="button">Mở thiệp</button>
   </div>
 </div>
@@ -703,6 +707,17 @@ var NGUON = (function(){
   var h = document.body.innerHTML, i = h.indexOf("<!--NGUON-BAT-DAU-->");
   return i >= 0 ? h.slice(i) : null;
 })();
+/* Thiệp riêng cho từng khách: link có ?ten=Tên khách */
+(function(){
+  try{
+    var q=new URLSearchParams(location.search), ten=(q.get("ten")||"").replace(/\s+/g," ").trim().slice(0,60);
+    if(!ten) return;
+    document.querySelectorAll(".ten-khach").forEach(function(e){ e.textContent=ten; });
+    document.querySelectorAll(".moi-khach").forEach(function(e){ e.classList.add("co-ten"); });
+    var o=document.getElementById("xnTen"); if(o && !o.value) o.value=ten;
+  }catch(e){}
+})();
+
 /* Luôn mở thiệp từ đầu trang */
 try{ if ("scrollRestoration" in history) history.scrollRestoration="manual"; }catch(e){}
 window.scrollTo(0,0);
