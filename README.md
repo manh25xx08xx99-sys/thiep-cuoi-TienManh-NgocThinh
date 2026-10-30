@@ -10,3 +10,11 @@ Thứ Bảy, 28 tháng 11 năm 2026 · tức ngày 20 tháng 10 năm Bính Ngọ
 Link nhà gái: https://manh25xx08xx99-sys.github.io/thiep-cuoi-TienManh-NgocThinh/nha-gai.html
 
 Link nhà trai: https://manh25xx08xx99-sys.github.io/thiep-cuoi-TienManh-NgocThinh/nha-trai.html
+
+---
+
+### 🔗 Tạo link mời riêng cho từng khách
+
+**[Mở trang tạo link mời](https://manh25xx08xx99-sys.github.io/thiep-cuoi-TienManh-NgocThinh/tao-link.html)**: dán danh sách tên khách, nhận link và tin nhắn mời cho từng người, rồi lưu danh sách lên Google Sheet (cần mã cập nhật).
+
+Link: https://manh25xx08xx99-sys.github.io/thiep-cuoi-TienManh-NgocThinh/tao-link.html
