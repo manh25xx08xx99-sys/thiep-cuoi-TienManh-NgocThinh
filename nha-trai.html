@@ -540,7 +540,7 @@ button,a,.chon-di span{touch-action:manipulation;-webkit-tap-highlight-color:tra
       </div>
     </div>
     <div class="su-kien">
-      <div class="gio"><strong>12:00</strong><em>Thứ Bảy</em></div>
+      <div class="gio"><strong>11:30</strong><em>Thứ Bảy</em></div>
       <div>
         <h3>Lễ Thành Hôn</h3>
         <p>Ngày 28 tháng 11 năm 2026</p>
@@ -716,10 +716,10 @@ var NGUON = (function(){
   var h = document.body.innerHTML, i = h.indexOf("<!--NGUON-BAT-DAU-->");
   return i >= 0 ? h.slice(i) : null;
 })();
-/* Thiệp riêng cho từng khách: link có ?ten=Tên khách */
+/* Thiệp riêng cho từng khách: link có #ten=Tên khách (hoặc ?ten= ở các link cũ) */
 (function(){
   try{
-    var q=new URLSearchParams(location.search), ten=(q.get("ten")||"").replace(/\s+/g," ").trim().slice(0,60);
+    var q=new URLSearchParams(location.search), h=new URLSearchParams(location.hash.replace(/^#/,"")), ten=(h.get("ten")||q.get("ten")||"").replace(/\s+/g," ").trim().slice(0,60);
     if(!ten) return;
     document.querySelectorAll(".ten-khach").forEach(function(e){ e.textContent=ten; });
     document.querySelectorAll(".moi-khach").forEach(function(e){ e.classList.add("co-ten"); });
